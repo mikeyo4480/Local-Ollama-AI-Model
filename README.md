@@ -32,3 +32,28 @@ This repository contains a local Python-based assistant that supports multi-mode
 ```bash
 git clone https://github.com/your-username/your-repo-name.git
 cd your-repo-name
+
+2. Create and activate a virtual environment
+
+# Windows
+python -m venv venv
+.\venv\Scripts\activate
+
+# macOS / Linux
+python3 -m venv venv
+source venv/bin/activate
+
+3. Install dependencies
+
+pip install gradio PyMuPDF tiktoken pandas python-docx requests python-dotenv
+
+4. Pull LLM models in Ollama
+
+ollama pull llama3
+ollama pull mdq100/Gemma3-Instruct-Abliterated:12b
+
+5. Run the assistant
+
+python rag_basic.py
+
+
