@@ -2,7 +2,6 @@
 
 This repository contains a local Python-based assistant that supports multi-model chat, file uploads, and a simple web interface using Gradio.
 
-> **Note:** Do not commit any `.env` files with API keys or other secrets. The `.gitignore` file is included to prevent accidental commits.
 
 ---
 
