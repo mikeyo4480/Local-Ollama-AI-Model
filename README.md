@@ -117,7 +117,3 @@ yaml
 Copy code
 
 ---
-
-I can also make a **matching `.gitignore`** that’s ready to go, ignoring `.env`, virtual environments, model files, and Docker data volumes. That way your GitHub repo stays completely safe.  
-
-Do you want me to create that `.gitignore` next?
