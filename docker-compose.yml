@@ -1,0 +1,39 @@
+﻿services:
+  # -------------------------------------------------
+  # 2️⃣ OpenWebUI – the chat UI + RAG (file upload)
+  # -------------------------------------------------
+  webui:
+    image: ghcr.io/open-webui/open-webui:latest
+    container_name: openwebui
+    restart: unless-stopped
+    depends_on:          # wait for the SD container to be ready
+      - sd
+    ports:
+      - "3000:8080"      # host 3000 -> container 8080
+    environment:
+      # Tell OpenWebUI to talk to the *native* Ollama server running on the Windows host
+      - OLLAMA_BASE_URL=http://host.docker.internal:11434
+    volumes:
+      - webui_data:/app/backend/data   # persists chats, uploaded files, vector DB
+
+  # -------------------------------------------------
+  # 3️⃣ Stable Diffusion XL‑Turbo – fast image generation
+  # -------------------------------------------------
+  sd:
+    image: docker.io/stabilityai/sdxl-turbo:latest
+    container_name: sd
+    restart: unless-stopped
+    ports:
+      - "7860:7860"      # optional – you can also access the raw SD UI here
+    environment:
+      # The image already contains the torch binaries for CUDA. If you have no GPU,
+      # the container will fall back to CPU (slower but still works).
+      - TORCH_COMMAND=pip install torch==2.3.0 torchvision==0.18.0 torchaudio==2.3.0
+    healthcheck:
+      test: ["CMD","curl","-f","http://localhost:7860"]
+      interval: 15s
+      timeout: 3s
+      retries: 5
+
+volumes:
+  webui_data:
